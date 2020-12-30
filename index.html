@@ -168,7 +168,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -225,6 +225,192 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/30/button/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Mick">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mick Web">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/12/30/button/" class="post-title-link" itemprop="url">纯 CSS 制作赛博朋克 2077 “故障风”按钮</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2020-12-30 15:18:00 / 修改时间：16:53:27" itemprop="dateCreated datePublished" datetime="2020-12-30T15:18:00+08:00">2020-12-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>赛博朋克 2077 这个游戏，在它的网页上，有一个 Available Now 的按钮，当游标移到它之上的时候，会有一个好像故障的毛刺效果<br>以下就是模仿并且实现这个效果的过程。</p>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    .box{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin:0 auto;
+        width: 500px;
+        height:300px;
+        background-color: #F8F005;
+    }
+    .button,.button::after{
+        position: relative;
+        width: 380px;
+        height: 86px;
+        font-size: 36px;
+        background: linear-gradient(45deg, transparent 5%, #ff013c 5%);
+        border: none;
+        outline: none;
+        box-shadow: 6px 0px 0px #00E6F6;
+        color: #fff;
+        letter-spacing: 2px;
+        line-height: 88px;
+    }
+    .button::after{
+        --slice-0: inset(50% 50% 50% 50%);
+        --slice-1: inset(80% -6px 0 0);
+        --slice-2: inset(50% -6px 30% 0);
+        --slice-3: inset(10% -6px 85% 0);
+        --slice-4: inset(40% -6px 43% 50%);
+        --slice-5: inset(80% -6px 5% 0);
+        position: absolute;
+        display: block;
+        content: 'AVAILABLE NOW';
+        top: 0;
+        left: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, transparent 3%, #00e6f6 3%, #00e6f6 5%, #ff013c 5%);
+        text-shadow: -3px -3px 0 #f8f005, 3px 3px 0 #00e6f6;
+        clip-path: inset(80% -6px 0 0);
+    }
+    .button:hover::after{
+        animation: glitch 1s steps(2, end);
+    }
+    @keyframes glitch {
+        0% {
+            clip-path: var(--slice-1);
+            transform: translate(-20px, -10px);
+        }
+        
+        10% {
+            clip-path: var(--slice-3);
+            transform: translate(10px, 10px);
+        }
+        
+        20% {
+            clip-path: var(--slice-1);
+            transform: translate(-10px, 10px);
+        }
+        
+        30% {
+            clip-path: var(--slice-3);
+            transform: translate(0px, 5px);
+        }
+        
+        40% {
+            clip-path: var(--slice-2);
+            transform: translate(-5px, 0px);
+        }
+        
+        50% {
+            clip-path: var(--slice-3);
+            transform: translate(5px, 0px);
+        }
+        
+        60% {
+            clip-path: var(--slice-4);
+            transform: translate(5px, 10px);
+        }
+        
+        70% {
+            clip-path: var(--slice-2);
+            transform: translate(-10px, 10px);
+        }
+        
+        80% {
+            clip-path: var(--slice-5);
+            transform: translate(20px, -10px);
+        }
+        
+        90% {
+            clip-path: var(--slice-1);
+            transform: translate(-10px, 0px);
+        }
+        
+        100% {
+            clip-path: var(--slice-1);
+            transform: translate(0);
+        }
+    }
+</style>
+<div class="box">
+    <button class="button">AVAILABLE NOW</button>
+</div>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/12/30/button/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/28/css/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -238,7 +424,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/12/28/css/" class="post-title-link" itemprop="url">CSS 小知识</a>
+          <a href="/2020/12/28/css/" class="post-title-link" itemprop="url">CSS 常用小知识</a>
         </h2>
 
         <div class="post-meta-container">
@@ -248,10 +434,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2020-12-28 14:12:49 / 修改时间：15:00:30" itemprop="dateCreated datePublished" datetime="2020-12-28T14:12:49+08:00">2020-12-28</time>
+      <time title="创建时间：2020-12-28 14:12:49" itemprop="dateCreated datePublished" datetime="2020-12-28T14:12:49+08:00">2020-12-28</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-12-30 16:52:48" itemprop="dateModified" datetime="2020-12-30T16:52:48+08:00">2020-12-30</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
