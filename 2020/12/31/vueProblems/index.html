@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="最近要求使用vue进行前后端分离项目，不断摸索踩坑之后，总结出如下几点vue项目开发中常见的问题及解决办法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue项目问题及解决方案">
+<meta property="og:url" content="http://example.com/2020/12/31/vueProblems/index.html">
+<meta property="og:site_name" content="Mick Web">
+<meta property="og:description" content="最近要求使用vue进行前后端分离项目，不断摸索踩坑之后，总结出如下几点vue项目开发中常见的问题及解决办法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-31T08:14:12.000Z">
+<meta property="article:modified_time" content="2020-12-31T08:54:19.194Z">
+<meta property="article:author" content="Mick">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2020/12/31/vueProblems/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>vue项目问题及解决方案 | Mick Web</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Mick Web</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%97%E8%A1%A8%E8%BF%9B%E5%85%A5%E8%AF%A6%E6%83%85%E9%A1%B5%E7%9A%84%E4%BC%A0%E5%8F%82%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">列表进入详情页的传参问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E8%AF%B7%E6%B1%82%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A5%E5%8F%A3%E8%B7%A8%E5%9F%9F%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">本地开发环境请求服务器接口跨域的问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#UI%E5%BA%93%E7%9A%84%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD"><span class="nav-number">3.</span> <span class="nav-text">UI库的按需加载:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%8F%AA%E5%9C%A8%E5%BD%93%E5%89%8D%E9%A1%B5%E9%9D%A2%E4%B8%AD%E8%A6%86%E7%9B%96ui%E5%BA%93%E4%B8%AD%E7%BB%84%E4%BB%B6%E7%9A%84%E6%A0%B7%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">如何优雅的只在当前页面中覆盖ui库中组件的样式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9A%E6%97%B6%E5%99%A8%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">定时器问题:</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%951%EF%BC%9A"><span class="nav-number">5.1.</span> <span class="nav-text">解决方法1：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%882%EF%BC%9A"><span class="nav-number">5.2.</span> <span class="nav-text">解决方案2：</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#rem%E6%96%87%E4%BB%B6%E7%9A%84%E5%AF%BC%E5%85%A5%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="nav-number">6.</span> <span class="nav-text">rem文件的导入问题：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Vue-Awesome-Swiper%E5%9F%BA%E6%9C%AC%E8%83%BD%E8%A7%A3%E5%86%B3%E4%BD%A0%E6%89%80%E6%9C%89%E7%9A%84%E8%BD%AE%E6%92%AD%E9%9C%80%E6%B1%82"><span class="nav-number">7.</span> <span class="nav-text">Vue-Awesome-Swiper基本能解决你所有的轮播需求</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E5%90%8E%E7%94%9F%E6%88%90%E5%BE%88%E5%A4%A7%E7%9A%84-map%E6%96%87%E4%BB%B6%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">8.</span> <span class="nav-text">打包后生成很大的.map文件的问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#fastClick%E7%9A%84300ms%E5%BB%B6%E8%BF%9F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">9.</span> <span class="nav-text">fastClick的300ms延迟解决方案</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%93%E5%8C%85%E5%90%8E%E5%90%84%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%93%E7%A7%AF%EF%BC%8C%E5%B8%AE%E4%BD%A0%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E5%A4%A7%E6%96%87%E4%BB%B6"><span class="nav-number">10.</span> <span class="nav-text">查看打包后各文件的体积，帮你快速定位大文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E6%87%92%E5%8A%A0%E8%BD%BD%EF%BC%88%E4%B9%9F%E5%8F%AB%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD%EF%BC%89"><span class="nav-number">11.</span> <span class="nav-text">路由懒加载（也叫延迟加载）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Hiper%EF%BC%9A%E4%B8%80%E6%AC%BE%E4%BB%A4%E4%BA%BA%E6%84%89%E6%82%A6%E7%9A%84%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7"><span class="nav-number">12.</span> <span class="nav-text">Hiper：一款令人愉悦的性能分析工具</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mick"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mick</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Mick-web" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Mick-web" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:438247026@qq.com" title="E-Mail → mailto:438247026@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/31/vueProblems/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Mick">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mick Web">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vue项目问题及解决方案
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2020-12-31 16:14:12 / 修改时间：16:54:19" itemprop="dateCreated datePublished" datetime="2020-12-31T16:14:12+08:00">2020-12-31</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>最近要求使用vue进行前后端分离项目，不断摸索踩坑之后，总结出如下几点vue项目开发中常见的问题及解决办法。</p>
+<a id="more"></a>
+<ul>
+<li>列表进入详情页的传参问题</li>
+<li>本地开发环境请求服务器接口跨域的问题</li>
+<li>UI库的按需加载</li>
+<li>如何优雅的只在当前页面中覆盖ui库中组件的样式</li>
+<li>定时器问题</li>
+<li>rem文件的导入问题</li>
+<li>Vue-Awesome-Swiper基本能解决你所有的轮播需求</li>
+<li>打包后生成很大的.map文件的问题</li>
+<li>fastClick 的300ms延迟解决方案</li>
+<li>查看打包后各文件的体积，帮你快速定位大文件</li>
+<li>路由懒加载（也叫延迟加载）</li>
+<li>hiper打开速度测试</li>
+</ul>
+<h5 id="列表进入详情页的传参问题"><a href="#列表进入详情页的传参问题" class="headerlink" title="列表进入详情页的传参问题"></a>列表进入详情页的传参问题</h5><p>例如商品列表页面前往商品详情页面，需要传一个商品id;</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">:to</span>=<span class="string">&quot;&#123;path: &#x27;detail&#x27;, query: &#123;id: 1&#125;&#125;&quot;</span>&gt;</span>前往detail页面<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>c页面的路径为<code>http://localhost:8080/#/detail?id=1</code>，可以看到传了一个参数<code>id=1</code>，并且就算刷新页面<code>id</code>也还会存在。此时在c页面可以通过<code>id</code>来获取对应的详情数据，获取<code>id</code>的方式<code>是this.$route.query.id</code><br>vue传参方式有：<code>query</code>、<code>params</code>+动态路由传参。<br>说下两者的区别：<br>1.query通过path切换路由，params通过name切换路由</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// query通过path切换路由</span><br><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">:to</span>=<span class="string">&quot;&#123;path: &#x27;Detail&#x27;, query: &#123; id: 1 &#125;&#125;&quot;</span>&gt;</span>前往Detail页面<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line">// params通过name切换路由</span><br><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">:to</span>=<span class="string">&quot;&#123;name: &#x27;Detail&#x27;, params: &#123; id: 1 &#125;&#125;&quot;</span>&gt;</span>前往Detail页面<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>2.query通过this.$route.query来接收参数，params通过this.$route.params来接收参数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// query通过this.$route.query接收参数</span></span><br><span class="line">created () &#123;</span><br><span class="line">    <span class="keyword">const</span> id = <span class="built_in">this</span>.$route.query.id;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// params通过this.$route.params来接收参数</span></span><br><span class="line">created () &#123;</span><br><span class="line">    <span class="keyword">const</span> id = <span class="built_in">this</span>.$route.params.id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.query传参的url展现方式：/detail?id=1&amp;user=123&amp;identity=1&amp;更多参数<br>params＋动态路由的url方式：/detail/123<br>4.params动态路由传参，一定要在路由中定义参数，然后在路由跳转的时候必须要加上参数，否则就是空白页面：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;      </span><br><span class="line">    path: <span class="string">&#x27;/detail/:id&#x27;</span>,      </span><br><span class="line">    name: <span class="string">&#x27;Detail&#x27;</span>,      </span><br><span class="line">    component: Detail    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，params传参时，如果没有在路由中定义参数，也是可以传过去的，同时也能接收到，但是一旦刷新页面，这个参数就不存在了。这对于需要依赖参数进行某些操作的行为是行不通的，因为你总不可能要求用户不能刷新页面吧。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义的路由中，只定义一个id参数</span></span><br><span class="line">&#123;</span><br><span class="line">    path: <span class="string">&#x27;detail/:id&#x27;</span>,</span><br><span class="line">    name: <span class="string">&#x27;Detail&#x27;</span>,</span><br><span class="line">    components: Detail</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// template中的路由传参，</span></span><br><span class="line"><span class="comment">// 传了一个id参数和一个token参数</span></span><br><span class="line"><span class="comment">// id是在路由中已经定义的参数，而token没有定义</span></span><br><span class="line">&lt;router-link :to=<span class="string">&quot;&#123;name: &#x27;Detail&#x27;, params: &#123; id: 1, token: &#x27;123456&#x27; &#125;&#125;&quot;</span>&gt;前往Detail页面&lt;/router-link&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在详情页接收</span></span><br><span class="line">created () &#123;</span><br><span class="line">    <span class="comment">// 以下都可以正常获取到</span></span><br><span class="line">    <span class="comment">// 但是页面刷新后，id依然可以获取，而token此时就不存在了</span></span><br><span class="line">    <span class="keyword">const</span> id = <span class="built_in">this</span>.$route.params.id;</span><br><span class="line">    <span class="keyword">const</span> token = <span class="built_in">this</span>.$route.params.token;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="本地开发环境请求服务器接口跨域的问题"><a href="#本地开发环境请求服务器接口跨域的问题" class="headerlink" title="本地开发环境请求服务器接口跨域的问题"></a>本地开发环境请求服务器接口跨域的问题</h5><p>本地开发项目请求服务器接口的时候，因为客户端的同源策略，导致了跨域的问题。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">proxyTable: &#123;</span><br><span class="line">      <span class="comment">// 用‘/api’开头，代理所有请求到目标服务器</span></span><br><span class="line">      <span class="string">&#x27;/api&#x27;</span>: &#123;</span><br><span class="line">        target: <span class="string">&#x27;http://jsonplaceholder.typicode.com&#x27;</span>, <span class="comment">// 接口域名</span></span><br><span class="line">        changeOrigin: <span class="literal">true</span>, <span class="comment">// 是否启用跨域</span></span><br><span class="line">        pathRewrite: &#123; <span class="comment">//</span></span><br><span class="line">          <span class="string">&#x27;^/api&#x27;</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 注意：配置好后一定要关闭原来的server，重新npm run dev启动项目。不然无效。</span></span><br></pre></td></tr></table></figure>
+<h5 id="UI库的按需加载"><a href="#UI库的按需加载" class="headerlink" title="UI库的按需加载:"></a>UI库的按需加载:</h5><p>为什么要使用按需加载的方式而不是一次性全部引入，原因就不多说了。这里以<code>vant</code>的按需加载为例，演示vue中ui库怎样进行按需加载：</p>
+<ul>
+<li>安装： cnpm i vant -S</li>
+<li>安装babel-plugin-import插件使其按需加载：  <code>cnpm i babel-plugin-import -D</code></li>
+<li>在 .babelrc文件中中添加插件配置 ：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">libraryDirectory &#123; </span><br><span class="line">    </span><br><span class="line">    <span class="string">&quot;plugins&quot;</span>: [ </span><br><span class="line">        <span class="comment">// 这里是原来的代码部分</span></span><br><span class="line">        <span class="comment">// …………</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 这里是要我们配置的代码</span></span><br><span class="line">        [<span class="string">&quot;import&quot;</span>, </span><br><span class="line">            &#123; </span><br><span class="line">                <span class="string">&quot;libraryName&quot;</span>: <span class="string">&quot;vant&quot;</span>, </span><br><span class="line">                <span class="string">&quot;libraryDirectory&quot;</span>: <span class="string">&quot;es&quot;</span>, </span><br><span class="line">                <span class="string">&quot;style&quot;</span>: <span class="literal">true</span> </span><br><span class="line">            &#125;</span><br><span class="line">        ] </span><br><span class="line">    ] </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>在main.js中按需加载你需要的插件：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 按需引入vant组件</span></span><br><span class="line"><span class="keyword">import</span> &#123;   </span><br><span class="line">    DatetimePicker,   </span><br><span class="line">    Button,   </span><br><span class="line">    List </span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span>;</span><br></pre></td></tr></table></figure></li>
+<li>使用组件：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用vant组件</span></span><br><span class="line">Vue.use(DatetimePicker)  </span><br><span class="line">    .use(Button)  </span><br><span class="line">    .use(List);</span><br></pre></td></tr></table></figure></li>
+<li>最后在在页面中使用：<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">van-button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>按钮<span class="tag">&lt;/<span class="name">van-button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+ps：出来vant库外，像antiUi、elementUi等，很多ui库都支持按需加载，可以去看文档，上面都会有提到。基本都是通过安装babel-plugin-import插件来支持按需加载的，使用方式与vant的如出一辙，可以去用一下。</li>
+</ul>
+<h5 id="如何优雅的只在当前页面中覆盖ui库中组件的样式"><a href="#如何优雅的只在当前页面中覆盖ui库中组件的样式" class="headerlink" title="如何优雅的只在当前页面中覆盖ui库中组件的样式"></a>如何优雅的只在当前页面中覆盖ui库中组件的样式</h5><p>首先我们vue文件的样式都是写在<style lang="less" scoped></style>标签中的，加scoped是为了使得样式只在当前页面有效.</p>
+<p>通过深度选择器解决,可以这样做：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.van-tabs</span> /<span class="selector-tag">deep</span>/ <span class="selector-class">.van-ellipsis</span> &#123; <span class="attribute">color</span>: blue&#125;;</span><br></pre></td></tr></table></figure>
+<p>这里的深度选择器/deep/是因为我用的less语言，如果你没有使用less/sass等，可以用&gt;&gt;&gt;符号。</p>
+<h5 id="定时器问题"><a href="#定时器问题" class="headerlink" title="定时器问题:"></a>定时器问题:</h5><p>我在a页面写一个定时，让他每秒钟打印一个1，然后跳转到b页面，此时可以看到，定时器依然在执行。这样是非常消耗性能的。</p>
+<h6 id="解决方法1："><a href="#解决方法1：" class="headerlink" title="解决方法1："></a>解决方法1：</h6><p>首先我在data函数里面进行定义定时器名称：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;            </span><br><span class="line">    <span class="keyword">return</span> &#123;                              </span><br><span class="line">        timer: <span class="literal">null</span>  <span class="comment">// 定时器名称          </span></span><br><span class="line">    &#125;        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后这样使用定时器：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.timer = (<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 某些操作</span></span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
+<p>最后在beforeDestroy()生命周期内清除定时器：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">beforeDestroy</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">clearInterval</span>(<span class="built_in">this</span>.timer);        </span><br><span class="line">    <span class="built_in">this</span>.timer = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="解决方案2："><a href="#解决方案2：" class="headerlink" title="解决方案2："></a>解决方案2：</h6><p>该方法是通过$once这个事件侦听器器在定义完定时器之后的位置来清除定时器。以下是完整代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> timer = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span>&#123;                    </span><br><span class="line">    <span class="comment">// 某些定时器操作                </span></span><br><span class="line">&#125;, <span class="number">500</span>);            </span><br><span class="line"><span class="comment">// 通过$once来监听定时器，在beforeDestroy钩子可以被清除。</span></span><br><span class="line"><span class="built_in">this</span>.$once(<span class="string">&#x27;hook:beforeDestroy&#x27;</span>, <span class="function">() =&gt;</span> &#123;            </span><br><span class="line">    <span class="built_in">clearInterval</span>(timer);                                    </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>类似于其他需要在当前页面使用，离开需要销毁的组件（例如一些第三方库的picker组件等等），都可以使用此方式来解决离开后以后在背后运行的问题。</p>
+<h5 id="rem文件的导入问题："><a href="#rem文件的导入问题：" class="headerlink" title="rem文件的导入问题："></a>rem文件的导入问题：</h5><p>我们在做手机端时，适配是必须要处理的一个问题。例如，我们处理适配的方案就是通过写一个rem.js，原理很简单，就是根据网页尺寸计算html的font-size大小，基本上小伙伴们都知道，这里直接附上代码，不多做介绍。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;(<span class="function"><span class="keyword">function</span>(<span class="params">c,d</span>)</span>&#123;<span class="keyword">var</span> e=<span class="built_in">document</span>.documentElement||<span class="built_in">document</span>.body,a=<span class="string">&quot;orientationchange&quot;</span> <span class="keyword">in</span> <span class="built_in">window</span>?<span class="string">&quot;orientationchange&quot;</span>:<span class="string">&quot;resize&quot;</span>,b=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">var</span> f=e.clientWidth;e.style.fontSize=(f&gt;=<span class="number">750</span>)?<span class="string">&quot;100px&quot;</span>:<span class="number">100</span>*(f/<span class="number">750</span>)+<span class="string">&quot;px&quot;</span>&#125;;b();c.addEventListener(a,b,<span class="literal">false</span>)&#125;)(<span class="built_in">window</span>);复制代码</span><br></pre></td></tr></table></figure>
+<p>这里说下怎么引入的问题，很简单。在<code>main.js</code>中，直接<code>import &#39;./config/rem&#39;</code>导入即可。import的路径根据你的文件路径去填写。</p>
+<h5 id="Vue-Awesome-Swiper基本能解决你所有的轮播需求"><a href="#Vue-Awesome-Swiper基本能解决你所有的轮播需求" class="headerlink" title="Vue-Awesome-Swiper基本能解决你所有的轮播需求"></a>Vue-Awesome-Swiper基本能解决你所有的轮播需求</h5><p>vue-awesome-swiper这个轮播组件，真的非常强大，基本可以满足我们的轮播需求。swiper相信很多人都用过，很好用，也很方便我们二次开发，定制我们需要的轮播效果。vue-awesome-swiper组件实质上基于swiper的，或者说就是能在vue中跑的swiper。下面说下怎么使用：</p>
+<ul>
+<li>安装 <code>cnpm install vue-awesome-swiper --save</code></li>
+<li>在组件中使用的方法，全局使用意义不大：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入组件</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;swiper/dist/css/swiper.css&#x27;</span> </span><br><span class="line"><span class="keyword">import</span> &#123; swiper, swiperSlide &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-awesome-swiper&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 在components中注册组件</span></span><br><span class="line">components: &#123;</span><br><span class="line">    swiper,</span><br><span class="line">    swiperSlide</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// template中使用轮播</span></span><br><span class="line"><span class="comment">// ref是当前轮播</span></span><br><span class="line"><span class="comment">// callback是回调</span></span><br><span class="line"><span class="comment">// 更多参数用法，请参考文档</span></span><br><span class="line">&lt;swiper :options=<span class="string">&quot;swiperOption&quot;</span> ref=<span class="string">&quot;mySwiper&quot;</span> @someSwiperEvent=<span class="string">&quot;callback&quot;</span>&gt;            </span><br><span class="line">    &lt;!-- slides --&gt;            </span><br><span class="line">    &lt;swiper-slide&gt;<span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;item&quot;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>&lt;/swiper-slide&gt;            </span><br><span class="line">    &lt;swiper-slide&gt;<span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;item&quot;</span>&gt;</span>2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>&lt;/swiper-slide&gt;            </span><br><span class="line">    &lt;swiper-slide&gt;<span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;item&quot;</span>&gt;</span>3<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>&lt;/swiper-slide&gt;            </span><br><span class="line">          </span><br><span class="line">    &lt;!-- Optional controls --&gt;            </span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;swiper-pagination&quot;</span>  slot=<span class="string">&quot;pagination&quot;</span>&gt;&lt;/div&gt;            </span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;swiper-button-prev&quot;</span> slot=<span class="string">&quot;button-prev&quot;</span>&gt;&lt;/div&gt;            </span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;swiper-button-next&quot;</span> slot=<span class="string">&quot;button-next&quot;</span>&gt;&lt;/div&gt;            </span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;swiper-scrollbar&quot;</span>   slot=<span class="string">&quot;scrollbar&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;/swiper&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数要写在data中</span></span><br><span class="line"><span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;            </span><br><span class="line">    <span class="keyword">return</span> &#123;     </span><br><span class="line">        <span class="comment">// swiper轮播的参数           </span></span><br><span class="line">        swiperOption: &#123; </span><br><span class="line">            <span class="comment">// 滚动条                   </span></span><br><span class="line">            scrollbar: &#123;                        </span><br><span class="line">                el: <span class="string">&#x27;.swiper-scrollbar&#x27;</span>,                    </span><br><span class="line">            &#125;, </span><br><span class="line">            <span class="comment">// 上一张，下一张                   </span></span><br><span class="line">            navigation: &#123;                        </span><br><span class="line">                nextEl: <span class="string">&#x27;.swiper-button-next&#x27;</span>,                        </span><br><span class="line">                prevEl: <span class="string">&#x27;.swiper-button-prev&#x27;</span>,                    </span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="comment">// 其他参数…………   </span></span><br><span class="line">        &#125;            </span><br><span class="line">    &#125;                    </span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+swiper需要配置哪些功能需求，自己根据文档进行增加或者删减。</li>
+</ul>
+<h5 id="打包后生成很大的-map文件的问题"><a href="#打包后生成很大的-map文件的问题" class="headerlink" title="打包后生成很大的.map文件的问题"></a>打包后生成很大的.map文件的问题</h5><p>项目打包后，代码都是经过压缩加密的，如果运行时报错，输出的错误信息无法准确得知是哪里的代码报错。 而生成的.map后缀的文件，就可以像未加密的代码一样，准确的输出是哪一行哪一列有错可以通过设置来不生成该类文件。但是我们在生成环境是不需要.map文件的，所以可以在打包时不生成这些文件：</p>
+<p>在config/index.js文件中，设置<code>productionSourceMap: false</code>,就可以不生成.map文件</p>
+<h5 id="fastClick的300ms延迟解决方案"><a href="#fastClick的300ms延迟解决方案" class="headerlink" title="fastClick的300ms延迟解决方案"></a>fastClick的300ms延迟解决方案</h5><p>开发移动端项目，点击事件会有300ms延迟的问题。至于为什么会有这个问题，请自行百度即可。这里只说下常见的解决思路，不管vue项目还是jq项目，都可以使用fastClick解决。<br>安装 <code>fastClick</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install fastclick -S</span><br></pre></td></tr></table></figure>
+<p>在main.js中引入<code>fastClick</code>和初始化:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> FastClick <span class="keyword">from</span> <span class="string">&#x27;fastclick&#x27;</span>; <span class="comment">// 引入插件</span></span><br><span class="line">FastClick.attach(<span class="built_in">document</span>.body); <span class="comment">// 使用 fastclick</span></span><br></pre></td></tr></table></figure>
+<h5 id="查看打包后各文件的体积，帮你快速定位大文件"><a href="#查看打包后各文件的体积，帮你快速定位大文件" class="headerlink" title="查看打包后各文件的体积，帮你快速定位大文件"></a>查看打包后各文件的体积，帮你快速定位大文件</h5><p>如果你是vue-cli初始化的项目，会默认安装webpack-bundle-analyzer插件，该插件可以帮助我们查看项目的体积结构对比和项目中用到的所有依赖。也可以直观看到各个模块体积在整个项目中的占比。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build --report <span class="comment">// 直接运行，然后在浏览器打开http://127.0.0.1:8888/即可查看复制代码</span></span><br></pre></td></tr></table></figure>
+<p>记得运行的时候先把之前<strong>npm run dev</strong>开启的本地关掉</p>
+<h5 id="路由懒加载（也叫延迟加载）"><a href="#路由懒加载（也叫延迟加载）" class="headerlink" title="路由懒加载（也叫延迟加载）"></a>路由懒加载（也叫延迟加载）</h5><p>路由懒加载可以帮我们在进入首屏时不用加载过度的资源，从而减少首屏加载速度。<br>路由文件中，<br>非懒加载写法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Index <span class="keyword">from</span> <span class="string">&#x27;@/page/index/index&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Router(&#123;  </span><br><span class="line">    routes: [    </span><br><span class="line">        &#123; </span><br><span class="line">            path: <span class="string">&#x27;/&#x27;</span>, </span><br><span class="line">            name: <span class="string">&#x27;Index&#x27;</span>,     </span><br><span class="line">            component: Index </span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>路由懒加载写法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Router(&#123;</span><br><span class="line">  routes: [    </span><br><span class="line">        &#123; </span><br><span class="line">            path: <span class="string">&#x27;/&#x27;</span>, </span><br><span class="line">            name: <span class="string">&#x27;Index&#x27;</span>, </span><br><span class="line">            component: <span class="function"><span class="params">resolve</span> =&gt;</span> <span class="built_in">require</span>([<span class="string">&#x27;@/view/index/index&#x27;</span>], resolve) </span><br><span class="line">        &#125;</span><br><span class="line">   ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h5 id="Hiper：一款令人愉悦的性能分析工具"><a href="#Hiper：一款令人愉悦的性能分析工具" class="headerlink" title="Hiper：一款令人愉悦的性能分析工具"></a>Hiper：一款令人愉悦的性能分析工具</h5><p>hiper工具的测试结果，我们可以看到DNS查询耗时、TCP连接耗时、第一个Byte到达浏览器的用时、页面下载耗时、DOM Ready之后又继续下载资源的耗时、白屏时间、DOM Ready 耗时、页面加载总耗时。<br>在我们的编辑器终端中全局安装：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install hiper -g</span><br></pre></td></tr></table></figure>
+<p><strong>使用：</strong>终端输入命令：hiper 测试的网址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># 当我们省略协议头时，默认会在url前添加&#96;https:&#x2F;&#x2F;&#96;</span><br><span class="line"></span><br><span class="line"> # 最简单的用法</span><br><span class="line"> hiper baidu.com</span><br><span class="line"></span><br><span class="line"> # 如何url中含有任何参数，请使用双引号括起来</span><br><span class="line"> hiper &quot;baidu.com?a&#x3D;1&amp;b&#x3D;2&quot;</span><br><span class="line"></span><br><span class="line"> #  加载指定页面100次</span><br><span class="line"> hiper -n 100 &quot;baidu.com?a&#x3D;1&amp;b&#x3D;2&quot;</span><br><span class="line"></span><br><span class="line"> #  禁用缓存加载指定页面100次</span><br><span class="line"> hiper -n 100 &quot;baidu.com?a&#x3D;1&amp;b&#x3D;2&quot; --no-cache</span><br><span class="line"></span><br><span class="line"> #  禁JavaScript加载指定页面100次</span><br><span class="line"> hiper -n 100 &quot;baidu.com?a&#x3D;1&amp;b&#x3D;2&quot; --no-javascript</span><br><span class="line"> </span><br><span class="line"> #  使用GUI形式加载指定页面100次</span><br><span class="line"> hiper -n 100 &quot;baidu.com?a&#x3D;1&amp;b&#x3D;2&quot; -H false</span><br><span class="line"></span><br><span class="line"> #  使用指定useragent加载网页100次</span><br><span class="line">hiper -n 100 &quot;baidu.com?a&#x3D;1&amp;b&#x3D;2&quot; -u &quot;Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;66.0.3359.181 Safari&#x2F;537.36&quot;复制代码</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>老板身体猛如虎，金钱不胜数！</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Mick 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Mick 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/12/31/interviewQuestions/" rel="prev" title="高频知识，轻松应对编程题">
+                  <i class="fa fa-chevron-left"></i> 高频知识，轻松应对编程题
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mick</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
